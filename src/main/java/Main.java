@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.StringTokenizer;
-import java.util.stream.StreamSupport;
 
 public class Main {
     public static void main(String[] args) {
@@ -39,7 +38,7 @@ public class Main {
                 }
             }
             inputFile.close();
-            Collections.shuffle(list);
+          /*   Collections.shuffle(list);
             ArrayList<Cancer> trainList = new ArrayList<>();
             ArrayList<Cancer> testList = new ArrayList<>();
 
@@ -47,10 +46,29 @@ public class Main {
                 trainList.add(list.get(i));
                 testList.add(list.get(++i));
             }
-            System.out.println("----------------TRAIN LIST-----------------");
+           System.out.println("----------------TRAIN LIST-----------------");
             printList(trainList);
             System.out.println("----------------TEST LIST-----------------");
-            printList(testList);
+            printList(testList);*/
+
+
+            ArrayList<Cancer> smallPartReturn = new ArrayList<>();
+            ArrayList<Cancer> bigPartReturn = new ArrayList<>();
+            DecisionTree d = new DecisionTree(list);
+            d.separateList(list,1,3,smallPartReturn,bigPartReturn);
+            int[] arr = d.separateListAndCount(list,1,3);
+            int[] arr2 = d.countList(list);
+
+            System.out.println("--------------SMALL-----------------");
+            printList(smallPartReturn);
+            System.out.println("--------------BIG-----------------");
+            printList(bigPartReturn);
+
+            System.out.println("Total Malignant : "+ arr2[0]+" Total Benign : "+ arr2[1]);
+            System.out.println("Small Part Malignant count : "+arr[0]);
+            System.out.println("Small Part Benign count : "+arr[1]);
+            System.out.println("Big Part Malignant count : "+arr[2]);
+            System.out.println("Big Part Benign count : "+arr[3]);
 
         } catch (IOException e) {
             e.printStackTrace();
